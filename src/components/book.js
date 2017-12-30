@@ -5,7 +5,11 @@ const Book = props => {
 
   return (
     <div>
-      {props.title}
+      <ul>
+        <li>{props.title}</li>
+        <li>{props.author}</li>
+        <li><img src={props.imgUrl} /></li>
+      </ul>
     </div>
   )
 }

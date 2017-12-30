@@ -7,9 +7,11 @@ class App extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
+      searchTerm: null,
       book: null,
       title: null,
-      searchTerm: "Slaughterhouse Five"
+      author: null,
+      imgUrl: null
     }
     this.getBook = this.getBook.bind(this)
     this.handleSearchChange = this.handleSearchChange.bind(this)
@@ -33,8 +35,12 @@ class App extends React.Component{
       .then(data => {
         let result = data.getElementsByTagName("work")[0]
         let bookTitle = result.getElementsByTagName('title')[0].innerHTML
+        let bookAuthor = result.getElementsByTagName('name')[0].innerHTML
+        let bookImage = result.getElementsByTagName('image_url')[0].innerHTML
         this.setState({ book: result })
         this.setState({ title: bookTitle })
+        this.setState({ author: bookAuthor })
+        this.setState({ imgUrl: bookImage })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
 
@@ -50,13 +56,19 @@ class App extends React.Component{
   }
 
   render() {
+    let bookElement;
+    if (this.state.title) {
+      bookElement = <Book
+        title={this.state.title}
+        author={this.state.author}
+        imgUrl={this.state.imgUrl}
+      />
+
+    }
     return (
 
       <div>
-
-        <Book
-          title={this.state.title}
-        />
+      {bookElement}
         <Search
         getBook={this.getBook}
         handleSearchChange={this.handleSearchChange}
