@@ -68,6 +68,7 @@ class App extends React.Component{
     return (
 
       <div>
+      <h2>The Fantastic Book Displayer</h2>
       {bookElement}
         <Search
         getBook={this.getBook}

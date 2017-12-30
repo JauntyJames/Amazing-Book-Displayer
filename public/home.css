@@ -1,0 +1,20 @@
+body {
+  background-color: rgb(205, 185, 231);
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+#app {
+  background-color: rgb(206, 188, 231);
+  border: .2em solid black;
+  padding: 1.5em;
+  width: 35em;
+  min-height: 15em;
+  margin: 5em auto;
+  max-width: 40em;
+  text-align: center;
+}
+
+p {
+  padding: .5em;
+  text-align: center;
+}
