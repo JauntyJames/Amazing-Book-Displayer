@@ -1,0 +1,12 @@
+---
+title: "Valid React on Node example"
+type: "exercise"
+description: "Create a Grocery List in React"
+tags: "React, stateful components, nested components"
+behaviors:
+  - react_on_node
+  - sinatra
+ignore:
+- "node_modules/"
+- "react-notes-stateful.md"
+---
