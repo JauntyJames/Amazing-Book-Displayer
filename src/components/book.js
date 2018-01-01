@@ -4,7 +4,7 @@ const Book = props => {
 
 
   return (
-    <div>
+    <div className="book-element">
       <p>{props.title}</p>
       <p>{props.author}</p>
       <p><img src={props.imgUrl} /></p>

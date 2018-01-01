@@ -3,10 +3,9 @@ body {
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
-#app {
-  background-color: rgb(206, 188, 231);
+.display-box {
   border: .2em solid black;
-  padding: 1.5em;
+  padding: 2em;
   width: 35em;
   min-height: 15em;
   margin: 5em auto;
@@ -14,7 +13,20 @@ body {
   text-align: center;
 }
 
+.marquee {
+  border: .2em solid black;
+  width: 80%;
+  margin: 5em auto;
+  height: 25em;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 p {
-  padding: .5em;
+  padding: 1em;
   text-align: center;
+}
+
+.book-element {
+  display: inline-block;
 }

@@ -1,14 +1,15 @@
 import React from 'react';
 
-import Book from './book';
-import Search from './search';
+import Book from '../components/book';
+import Search from '../components/search';
+import Marquee from '../components/marquee'
 
 class App extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
+      results: null,
       searchTerm: null,
-      book: null,
       title: null,
       author: null,
       imgUrl: null
@@ -33,11 +34,12 @@ class App extends React.Component{
       })
       .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
       .then(data => {
-        let result = data.getElementsByTagName("work")[0]
+        let results = data.getElementsByTagName("work")
+        let result = results[0]
         let bookTitle = result.getElementsByTagName('title')[0].innerHTML
         let bookAuthor = result.getElementsByTagName('name')[0].innerHTML
         let bookImage = result.getElementsByTagName('image_url')[0].innerHTML
-        this.setState({ book: result })
+        this.setState({ results: results })
         this.setState({ title: bookTitle })
         this.setState({ author: bookAuthor })
         this.setState({ imgUrl: bookImage })
@@ -68,12 +70,19 @@ class App extends React.Component{
     return (
 
       <div>
-      <h2>The Fantastic Book Displayer</h2>
-      {bookElement}
-        <Search
-        getBook={this.getBook}
-        handleSearchChange={this.handleSearchChange}
-        />
+        <div className="display-box">
+          <h2>The Fantastic Book Displayer</h2>
+          {bookElement}
+          <Search
+            getBook={this.getBook}
+            handleSearchChange={this.handleSearchChange}
+          />
+        </div>
+        <div className="marquee">
+          <Marquee
+            books={this.state.results}
+          />
+        </div>
       </div>
     );
   }
