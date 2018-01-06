@@ -3,6 +3,7 @@ import React from 'react';
 import Book from '../components/book';
 import Search from '../components/search';
 import Marquee from '../components/marquee';
+import xmlToJson from '../constants/parser'
 
 class App extends React.Component{
   constructor(props) {
@@ -24,8 +25,6 @@ class App extends React.Component{
     event.preventDefault();
       fetch(`/api/v1/${this.state.searchTerm}`)
       .then(response => {
-        console.log(response);
-        console.log(response.ok);
         if (response.ok) {
           return response.text();
         } else {
@@ -36,11 +35,12 @@ class App extends React.Component{
       })
       .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
       .then(data => {
-        let results = data.getElementsByTagName("work")
+        let json = xmlToJson(data)
+        let results = json.GoodreadsResponse.search.results.work
         let result = results[0]
-        let title = result.getElementsByTagName('title')[0].innerHTML
-        let author = result.getElementsByTagName('name')[0].innerhtml
-        let imgUrl = result.getElementsByTagName('image_url')[0].innerHTML
+        let title = result.best_book.title['#text']
+        let author = result.best_book.author.name['#text']
+        let imgUrl = result.best_book.image_url['#text']
         this.setState({ results: results, book: result, title: title, author: author, imgUrl: imgUrl });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
