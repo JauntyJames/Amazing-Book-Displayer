@@ -4,7 +4,7 @@ const Search = (props) => {
   return (
     <div>
       <form>
-        <input name="search" placeholder="Enter title, author, or ISBN" onChange={props.handleSearchChange}/>
+        <input name="search" placeholder="Enter title, author, or ISBN" onChange={props.handleSearchChange} value={props.searchTerm}/>
         <button onClick={props.getBook}>Get a book.</button>
       </form>
     </div>

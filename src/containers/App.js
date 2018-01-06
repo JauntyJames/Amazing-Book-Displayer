@@ -2,20 +2,22 @@ import React from 'react';
 
 import Book from '../components/book';
 import Search from '../components/search';
-import Marquee from '../components/marquee'
+import Marquee from '../components/marquee';
 
 class App extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      results: null,
       searchTerm: null,
+      results: null,
+      book: null,
       title: null,
       author: null,
       imgUrl: null
     }
     this.getBook = this.getBook.bind(this)
     this.handleSearchChange = this.handleSearchChange.bind(this)
+    this.selectBook = this.selectBook.bind(this)
   }
 
   getBook(event) {
@@ -36,36 +38,59 @@ class App extends React.Component{
       .then(data => {
         let results = data.getElementsByTagName("work")
         let result = results[0]
-        let bookTitle = result.getElementsByTagName('title')[0].innerHTML
-        let bookAuthor = result.getElementsByTagName('name')[0].innerHTML
-        let bookImage = result.getElementsByTagName('image_url')[0].innerHTML
-        this.setState({ results: results })
-        this.setState({ title: bookTitle })
-        this.setState({ author: bookAuthor })
-        this.setState({ imgUrl: bookImage })
+        let title = result.getElementsByTagName('title')[0].innerHTML
+        let author = result.getElementsByTagName('name')[0].innerhtml
+        let imgUrl = result.getElementsByTagName('image_url')[0].innerHTML
+        this.setState({ results: results, book: result, title: title, author: author, imgUrl: imgUrl });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
 
   }
 
   handleSearchChange(event){
+    event.preventDefault();
     let term = event.target.value
     this.setState({ searchTerm: term })
   }
 
-  componentDidMount() {
+  selectBook(id){
+    let booksArray = [].slice.call(this.state.results)
+    booksArray.forEach((book) => {
+      let bookId = book.getElementsByTagName('id')[0].innerHTML
+      if (bookId === id){
+        this.setState({ book: book })
+      }
+    })
+  }
 
+  changeBookProperties(book){
+    let title = book.getElementsByTagName('title')[0].innerHTML
+    let author = book.getElementsByTagName('name')[0].innerHTML
+    let imgUrl = book.getElementsByTagName('image_url')[0].innerHTML
+    this.setState({ title: title, author: author, imgUrl: imgUrl })
+  }
+
+  componentDidMount() {
+    if (this.state.results !== null ){
+      debugger
+      let book = this.state.book
+      this.changeBookProperties(book);
+    }
   }
 
   render() {
+    // if (this.state.results !== null && this.state.book === null ){
+    //   let book = this.state.results[0]
+    //   this.changeBookProperties(book);
+    // }
     let bookElement;
-    if (this.state.title) {
+    if (this.state.results !== null) {
       bookElement = <Book
         title={this.state.title}
         author={this.state.author}
         imgUrl={this.state.imgUrl}
+        selectBook={this.selectBook}
       />
-
     }
     return (
 
@@ -76,11 +101,13 @@ class App extends React.Component{
           <Search
             getBook={this.getBook}
             handleSearchChange={this.handleSearchChange}
+            searchTerm={this.props.searchTerm}
           />
         </div>
         <div className="marquee">
           <Marquee
             books={this.state.results}
+            selectBook={this.selectBook}
           />
         </div>
       </div>

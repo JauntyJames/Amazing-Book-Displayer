@@ -13,10 +13,12 @@ const Marquee = (props) => {
 
       return (
         <Book
+          id={id}
           key={id}
           title={title}
           author={author}
           imgUrl={imgUrl}
+          selectBook={props.selectBook}
         />
       )
     })

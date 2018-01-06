@@ -29,4 +29,5 @@ p {
 
 .book-element {
   display: inline-block;
+  width: 25em;
 }
