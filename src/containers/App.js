@@ -38,7 +38,6 @@ class App extends React.Component{
         let json = xmlToJson(data)
         let results = json.GoodreadsResponse.search.results.work
         let result = results[0]
-        debugger
         let title = result.best_book.title['#text']
         let author = result.best_book.author.name['#text']
         let imgUrl = result.best_book.image_url['#text']
@@ -59,25 +58,30 @@ class App extends React.Component{
     booksArray.forEach((book) => {
       let bookId = book.best_book.id['#text']
       if (bookId === id){
-        this.setState({ book: book })
+        this.setState({
+          book: book,
+          title: book.best_book.title['#text'],
+          author: book.best_book.author.name['#text'],
+          imgUrl: book.best_book.image_url['#text']
+        })
       }
     })
   }
 
-  changeBookProperties(book){
-    let title = result.best_book.title['#text']
-    let author = result.best_book.author.name['#text']
-    let imgUrl = result.best_book.image_url['#text']
-    this.setState({ title: title, author: author, imgUrl: imgUrl })
-  }
-
-  componentDidMount() {
-    if (this.state.results !== null ){
-      debugger
-      let book = this.state.book
-      this.changeBookProperties(book);
-    }
-  }
+  // changeBookProperties(book){
+  //   let title = result.best_book.title['#text']
+  //   let author = result.best_book.author.name['#text']
+  //   let imgUrl = result.best_book.image_url['#text']
+  //   this.setState({ title: title, author: author, imgUrl: imgUrl })
+  // }
+  //
+  // componentDidMount() {
+  //   if (this.state.results !== null ){
+  //     debugger
+  //     let book = this.state.book
+  //     this.changeBookProperties(book);
+  //   }
+  // }
 
   render() {
     // if (this.state.results !== null && this.state.book === null ){
