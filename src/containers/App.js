@@ -38,6 +38,7 @@ class App extends React.Component{
         let json = xmlToJson(data)
         let results = json.GoodreadsResponse.search.results.work
         let result = results[0]
+        debugger
         let title = result.best_book.title['#text']
         let author = result.best_book.author.name['#text']
         let imgUrl = result.best_book.image_url['#text']
@@ -54,9 +55,9 @@ class App extends React.Component{
   }
 
   selectBook(id){
-    let booksArray = [].slice.call(this.state.results)
+    let booksArray = this.state.results
     booksArray.forEach((book) => {
-      let bookId = book.getElementsByTagName('id')[0].innerHTML
+      let bookId = book.best_book.id['#text']
       if (bookId === id){
         this.setState({ book: book })
       }
@@ -64,9 +65,9 @@ class App extends React.Component{
   }
 
   changeBookProperties(book){
-    let title = book.getElementsByTagName('title')[0].innerHTML
-    let author = book.getElementsByTagName('name')[0].innerHTML
-    let imgUrl = book.getElementsByTagName('image_url')[0].innerHTML
+    let title = result.best_book.title['#text']
+    let author = result.best_book.author.name['#text']
+    let imgUrl = result.best_book.image_url['#text']
     this.setState({ title: title, author: author, imgUrl: imgUrl })
   }
 

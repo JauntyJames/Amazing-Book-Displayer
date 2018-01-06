@@ -4,12 +4,11 @@ import Book from './book';
 const Marquee = (props) => {
   let bookCollection;
   if (props.books !== null) {
-    let booksArray = [].slice.call(props.books)
-    bookCollection = booksArray.map(book => {
-      let title = book.getElementsByTagName('title')[0].innerHTML
-      let author = book.getElementsByTagName('name')[0].innerHTML
-      let imgUrl = book.getElementsByTagName('image_url')[0].innerHTML
-      let id = book.getElementsByTagName('id')[0].innerHTML
+    bookCollection = props.books.map(book => {
+      let title = book.best_book.title['#text']
+      let author = book.best_book.author.name['#text']
+      let imgUrl = book.best_book.image_url['#text']
+      let id = book.best_book.id['#text']
 
       return (
         <Book
