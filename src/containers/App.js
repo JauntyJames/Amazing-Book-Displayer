@@ -3,7 +3,7 @@ import React from 'react';
 import Book from '../components/book';
 import Search from '../components/search';
 import Marquee from '../components/marquee';
-import xmlToJson from '../constants/parser'
+import xmlToJson from '../constants/parser';
 
 class App extends React.Component{
   constructor(props) {
@@ -41,7 +41,14 @@ class App extends React.Component{
         let title = result.best_book.title['#text']
         let author = result.best_book.author.name['#text']
         let imgUrl = result.best_book.image_url['#text']
-        this.setState({ results: results, book: result, title: title, author: author, imgUrl: imgUrl });
+        this.setState({
+          results: results,
+          book: result,
+          title: title,
+          author: author,
+          imgUrl: imgUrl,
+          searchTerm: null
+        });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
 
@@ -68,26 +75,8 @@ class App extends React.Component{
     })
   }
 
-  // changeBookProperties(book){
-  //   let title = result.best_book.title['#text']
-  //   let author = result.best_book.author.name['#text']
-  //   let imgUrl = result.best_book.image_url['#text']
-  //   this.setState({ title: title, author: author, imgUrl: imgUrl })
-  // }
-  //
-  // componentDidMount() {
-  //   if (this.state.results !== null ){
-  //     debugger
-  //     let book = this.state.book
-  //     this.changeBookProperties(book);
-  //   }
-  // }
 
   render() {
-    // if (this.state.results !== null && this.state.book === null ){
-    //   let book = this.state.results[0]
-    //   this.changeBookProperties(book);
-    // }
     let bookElement;
     if (this.state.results !== null) {
       bookElement = <Book
